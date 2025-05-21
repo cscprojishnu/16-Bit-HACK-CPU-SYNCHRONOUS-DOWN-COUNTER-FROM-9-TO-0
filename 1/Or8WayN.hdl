@@ -1,0 +1,41 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projecots/1/Or8Way.hdl
+/**
+ * 8-way Or gate: 
+ * out = in[0] Or in[1] Or ... Or in[7]
+ */
+CHIP Or8WayN{
+    IN in[8];
+    OUT out;
+
+    PARTS:
+    Nand(a=in[0],b=in[0],out=o1);
+    Nand(a=in[1],b=in[1],out=o2);
+    Nand(a=o1,b=o2,out=out1);
+
+    Nand(a=out1,b=out1,out=o3);
+    Nand(a=in[2],b=in[2],out=o4);
+    Nand(a=o3,b=o4,out=out2);
+
+    Nand(a=out2,b=out2,out=o5);
+    Nand(a=in[3],b=in[3],out=o6);
+    Nand(a=o5,b=o6,out=out3);
+
+    Nand(a=out3,b=out3,out=o7);
+    Nand(a=in[4],b=in[4],out=o8);
+    Nand(a=o7,b=o8,out=out4);
+
+    Nand(a=out4,b=out4,out=o9);
+    Nand(a=in[5],b=in[5],out=o10);
+    Nand(a=o9,b=o10,out=out5);
+
+    Nand(a=out5,b=out5,out=o11);
+    Nand(a=in[6],b=in[6],out=o12);
+    Nand(a=o11,b=o12,out=out6);
+
+    Nand(a=out6,b=out6,out=o13);
+    Nand(a=in[7],b=in[7],out=o14);
+    Nand(a=o13,b=o14,out=out);
+}
