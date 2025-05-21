@@ -1,0 +1,12 @@
+CHIP JKusingD{
+IN J,K;
+OUT Q;
+PARTS:
+Not(in=K,out=kbar);
+And(a=kbar,b=q,out=x1);
+Not(in=q,out=notq);
+And(a=J,b=notq,out=x2);
+Or(a=x1,b=x2,out=y);
+DFF(in=y,out=q,out=Q);
+
+}

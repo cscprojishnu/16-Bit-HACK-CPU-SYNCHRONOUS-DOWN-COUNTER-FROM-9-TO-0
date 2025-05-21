@@ -1,0 +1,9 @@
+CHIP JohnsonCounter {
+	IN o1,o2,o3,success;
+	OUT out1,out2,out3,out4;
+	PARTS:
+	Nand(a=success,b=success,out=psuccess);
+	DFF1(in=psuccess,out=o1,out=out4);
+	DFF1(in=o1,out=o2,out=out3);
+	DFF1(in=o2,out=o3,out=out2);
+	DFF1(in=o3,out=success,out=out1);}

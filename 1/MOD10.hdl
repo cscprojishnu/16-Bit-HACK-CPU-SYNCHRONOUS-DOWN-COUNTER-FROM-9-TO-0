@@ -1,0 +1,27 @@
+CHIP MOD10{
+OUT out[4];
+PARTS:
+Not(in=q1,out=q1bar);
+Not(in=q2,out=q2bar);
+Not(in=q3,out=q3bar);
+Not(in=q4,out=q4bar);
+
+And3(a=q2bar,b=q3bar,c=q4bar,out=J1);
+And3(a=q1,b=q2bar,c=q3bar,out=x);
+And(a=q4bar,b=x,out=J2);
+And3(a=q1bar,b=q2,c=q4bar,out=y);
+And(a=q1,b=J1,out=z);
+Or(a=y,b=z,out=J3);
+
+And3(a=q2bar,b=q3bar,c=q4bar,out=K1);
+And3(a=q1bar,b=q3bar,c=q4bar,out=K2);
+And(a=q1bar,b=q4bar,out=K3);
+
+
+JKusingD(J=true,K=true,Q=q4,Q=out[0]);
+JKusingD(J=J3,K=K3,Q=q3,Q=out[1]);
+JKusingD(J=J2,K=K2,Q=q2,Q=out[2]);
+JKusingD(J=J1,K=K1,Q=q1,Q=out[3]);
+}
+
+

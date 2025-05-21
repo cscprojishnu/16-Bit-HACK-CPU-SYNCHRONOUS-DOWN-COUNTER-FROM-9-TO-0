@@ -1,0 +1,21 @@
+CHIP Digit {
+    IN Clock, Reset, Init, ModIn;
+    OUT ModOut;
+    OUT Q[3:0]; // 4-bit BCD result for one digit
+
+    PARTS:
+    // Implement logic for a single digit BCD conversion here.
+    // For the sake of this example, let's assume it's just a 4-bit counter.
+
+    // For simplicity, assume Q is the current digit in binary
+    // We'll handle ModIn/ModOut to simulate the carry logic
+
+    // A simple counter logic (this will increment the BCD digit)
+    DFF(d=ModIn, clk=Clock, reset=Reset, q=Q[0]);
+    DFF(d=Q[0], clk=Clock, reset=Reset, q=Q[1]);
+    DFF(d=Q[1], clk=Clock, reset=Reset, q=Q[2]);
+    DFF(d=Q[2], clk=Clock, reset=Reset, q=Q[3]);
+
+    // For simplicity, ModOut is the final carry from the last digit
+    And(a=Q[3], b=Q[2], out=ModOut);
+}

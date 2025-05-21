@@ -1,0 +1,39 @@
+// Synchronous 4-bit Down Counter (Counts down from 9 to 0)
+CHIP DownCounter {
+    IN  clk;
+    OUT out[4];
+
+    PARTS:
+    // Intermediate signals for each bit's next state
+    // Bit 0 toggles on every clock cycle
+    Not(in=out[0], out=next0);
+
+    // Carry signals for counting down
+    And(a=out[0], b=true, out=carry1);
+    Xor(a=out[1], b=carry1, out=next1);
+    And(a=carry1, b=out[1], out=carry2);
+    Xor(a=out[2], b=carry2, out=next2);
+    And(a=carry2, b=out[2], out=carry3);
+    Xor(a=out[3], b=carry3, out=next3);
+
+    // Detect if the counter reached 0 (0000)
+    Not(in=out[0], out=notOut0);
+    Not(in=out[1], out=notOut1);
+    Not(in=out[2], out=notOut2);
+    Not(in=out[3], out=notOut3);
+    And(a=notOut0, b=notOut1, out=zeroDetect1);
+    And(a=notOut2, b=notOut3, out=zeroDetect2);
+    And(a=zeroDetect1, b=zeroDetect2, out=isZero);
+
+    // Intermediate signals for loading 9 when the counter reaches 0
+    Mux16(a=next0, b=true, sel=isZero, out=final0);  // Load 1 for bit 0
+    Mux16(a=next1, b=false, sel=isZero, out=final1); // Load 0 for bit 1
+    Mux16(a=next2, b=false, sel=isZero, out=final2); // Load 0 for bit 2
+    Mux16(a=next3, b=true, sel=isZero, out=final3);  // Load 1 for bit 3
+
+    // Flip-flops for each bit, triggered by the clock
+    DFF(a=final0, out=out[0], clk=clk);
+    DFF(a=final1, out=out[1], clk=clk);
+    DFF(a=final2, out=out[2], clk=clk);
+    DFF(a=final3, out=out[3], clk=clk);
+}
