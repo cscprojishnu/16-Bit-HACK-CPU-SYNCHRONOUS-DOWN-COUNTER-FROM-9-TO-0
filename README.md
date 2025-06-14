@@ -1,3 +1,3 @@
 # 16-Bit-HACK-CPU
 
-[View the PDF](./report.pdf)
+[View the PDF](./Report.pdf)
